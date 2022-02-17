@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { registerAction } from '../../store/actions/register.action';
 import { IAppState } from '../../../shared/types/appState.interface';
 import { isSubmittingSelector } from '../../store/selectors';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'nb-register',
@@ -16,7 +17,11 @@ export class RegisterComponent implements OnInit {
     form: FormGroup;
     isSubmitting$: Observable<boolean>;
 
-    constructor(private fb: FormBuilder, private store: Store<IAppState>) {}
+    constructor(
+        private fb: FormBuilder,
+        private store: Store<IAppState>,
+        private auchService: AuthService,
+    ) {}
 
     ngOnInit(): void {
         this.initializeForm();
@@ -25,7 +30,6 @@ export class RegisterComponent implements OnInit {
 
     initializeValues(): void {
         this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-        // console.log('isSubmiting', this.isSubmitting$);
     }
 
     initializeForm(): void {
@@ -38,5 +42,8 @@ export class RegisterComponent implements OnInit {
 
     onSubmit(): void {
         this.store.dispatch(registerAction(this.form.value));
+        this.auchService
+            .register(this.form.value)
+            .subscribe((currentUser) => console.log(currentUser));
     }
 }
