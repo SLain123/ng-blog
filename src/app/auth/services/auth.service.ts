@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { IRegisterRequest } from './../types/register_request.interface';
-import { ICurrentUser } from 'src/app/shared/types/current_user.interface';
+import { IUser } from 'src/app/shared/types/user.interface';
 import { environment } from 'src/environments/environment';
 import { IAuthResponse } from './../types/authResponse.interface';
 
@@ -12,7 +12,7 @@ import { IAuthResponse } from './../types/authResponse.interface';
 export class AuthService {
     constructor(private http: HttpClient) {}
 
-    register(data: IRegisterRequest): Observable<ICurrentUser> {
+    register(data: IRegisterRequest): Observable<IUser> {
         const url = `${environment.baseURL}/users`;
 
         return this.http

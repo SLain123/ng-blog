@@ -1,5 +1,5 @@
-import { ICurrentUser } from '../../shared/types/current_user.interface';
+import { IUser } from '../../shared/types/user.interface';
 
 export interface IAuthResponse {
-    user: ICurrentUser;
+    user: IUser;
 }
