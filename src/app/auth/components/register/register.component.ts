@@ -5,7 +5,11 @@ import { Observable } from 'rxjs';
 
 import { registerAction } from '../../store/actions/register.action';
 import { IAppState } from '../../../shared/types/appState.interface';
-import { isSubmittingSelector } from '../../store/selectors';
+import {
+    isSubmittingSelector,
+    validationErrorsSelector,
+} from '../../store/selectors';
+import { IBackErrors } from 'src/app/shared/types/backErrors.interface';
 
 @Component({
     selector: 'nb-register',
@@ -15,11 +19,9 @@ import { isSubmittingSelector } from '../../store/selectors';
 export class RegisterComponent implements OnInit {
     form: FormGroup;
     isSubmitting$: Observable<boolean>;
+    backErrors$: Observable<IBackErrors | null>;
 
-    constructor(
-        private fb: FormBuilder,
-        private store: Store<IAppState>,
-    ) {}
+    constructor(private fb: FormBuilder, private store: Store<IAppState>) {}
 
     ngOnInit(): void {
         this.initializeForm();
@@ -28,6 +30,7 @@ export class RegisterComponent implements OnInit {
 
     initializeValues(): void {
         this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
+        this.backErrors$ = this.store.pipe(select(validationErrorsSelector));
     }
 
     initializeForm(): void {

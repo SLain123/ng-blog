@@ -9,6 +9,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { reducers } from './store/reducers';
 import { AuthService } from './services/auth.service';
 import { RegisterEffect } from './store/effects/register.effect';
+import { BackErrorMessagesModule } from '../shared/modules/backErrorMessages/backErrorMessages.module';
 
 const routes: Routes = [
     {
@@ -25,6 +26,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         StoreModule.forFeature('auth', reducers),
         EffectsModule.forFeature([RegisterEffect]),
+        BackErrorMessagesModule,
     ],
     providers: [AuthService],
 })
